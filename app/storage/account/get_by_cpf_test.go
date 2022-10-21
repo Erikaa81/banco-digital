@@ -2,55 +2,75 @@ package account
 
 import (
 	"context"
-	"errors"
+	"reflect"
 	"testing"
 	"time"
 
 	"github.com/erikaa81/banco-digital/app/domain/vos"
 )
 
-func TestCpfExists(t *testing.T) {
-	ctx := context.Background()
+func TestRepository_GetByCPF(t *testing.T) {
+	type fields struct {
+		storage map[string]vos.Account
+	}
+	
+	type args struct {
+		ctx context.Context
+		cpf string
+	}
 
-	t.Run("should successfully get account by CPF", func(t *testing.T) {
-		cpf := "22233344433"
-		r := Repository{
-			storage: map[string]vos.Account{
-				cpf: {
-					ID:        "1",
-					Name:      "Joao",
-					CPF:       "22233344433",
-					CreatedAt: time.Date(2022, 10, 16, 0, 0, 0, 0, time.Local)},
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		want    vos.Account
+		wantErr bool
+	}{
+		{
+			name: "should successfully get account by CPF",
+			fields: fields{
+
+				storage: map[string]vos.Account{
+					"22233344433": {ID: "1", Name: "Joao", CPF: "22233344433", CreatedAt: time.Date(2022, 10, 16, 0, 0, 0, 0, time.Local)},
+				},
 			},
-		}
+			args: args{
+				ctx: context.Background(),
+				cpf: "22233344433",
+			},
 
-		want := vos.Account{
-			ID:        "1",
-			Name:      "Joao",
-			CPF:       "22233344433",
-			CreatedAt: time.Date(2022, 10, 16, 0, 0, 0, 0, time.Local),
-		}
+			want:    vos.Account{ID: "1", Name: "Joao", CPF: "22233344433", CreatedAt: time.Date(2022, 10, 16, 0, 0, 0, 0, time.Local)},
+			wantErr: false,
+		},
+		{
+			name: "should return error CPF not found",
+			fields: fields{
 
-		got, err := r.GetByCPF(ctx, cpf)
+				storage: map[string]vos.Account{},
+			},
+			args: args{
+				ctx: context.Background(),
+				cpf: "22233344433",
+			},
 
-		if want != got {
-			t.Errorf("wanted error to be nil but got: %s", err)
-		}
+			want:    vos.Account{},
+			wantErr: true,
+		},
+	}
 
-		if err != nil {
-			t.Errorf("wanted error to be nil but got: %s", err)
-		}
-	})
-
-	t.Run("should return error cpf not found", func(t *testing.T) {
-		cpf := "22233344455"
-		r := Repository{
-			storage: map[string]vos.Account{},
-		}
-
-		_, err := r.GetByCPF(ctx, cpf)
-		if !errors.Is(err, vos.ErrCPFNotFound) {
-			t.Errorf("expected err %s, and received: %s", vos.ErrCPFNotFound, err)
-		}
-	})
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			r := Repository{
+				storage: tt.fields.storage,
+			}
+			got, err := r.GetByCPF(tt.args.ctx, tt.args.cpf)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Repository.GetByCPF() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Repository.GetByCPF() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }

@@ -3,31 +3,61 @@ package account
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/erikaa81/banco-digital/app/domain/vos"
 )
 
-func TestStore(t *testing.T) {
-	ctx := context.Background()
+func TestRepository_Store(t *testing.T) {
+	type fields struct {
+		storage map[string]vos.Account
+	}
+	type args struct {
+		ctx     context.Context
+		account vos.Account
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		args    args
+		wantErr bool
+	}{
+		{
+			name: "should return successfully the stored account",
+			fields: fields{
+				storage: map[string]vos.Account{},
+			},
+			args: args{
+				ctx: nil,
+				account: vos.Account{
+					ID:        "123",
+					Name:      "Maria",
+					CPF:       "2221133322",
+					CreatedAt: time.Date(2022, 10, 16, 0, 0, 0, 0, time.Local)},
+			},
 
-	t.Run("should return successfully the stored account ", func(t *testing.T) {
-		account := vos.Account{ID: "124", Name: "Jose", CPF: "77766655544"}
-		r := Repository{
-			storage: map[string]vos.Account{},
-		}
+			wantErr: false,
+		},
+	}
 
-		output, err := r.Store(ctx, account)
-		if err != nil {
-			t.Errorf("wanted error to be nil got: %v", err)
-		}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			r := Repository{
+				storage: tt.fields.storage,
+			}
+			got, err := r.Store(tt.args.ctx, tt.args.account)
+			if err != nil {
+				t.Errorf("wanted error to be nil got: %v", err)
+			}
 
-		retrievedAccount, ok := r.storage[output.ID]
-		if !ok {
-			t.Errorf("I would like to find the account but can't find it")
-		}
+			retrievedAccount, ok := r.storage[got.ID]
+			if !ok {
+				t.Errorf("account not found")
+			}
 
-		if output != retrievedAccount {
-			t.Errorf("accounts are the same and are not")
-		}
-	})
+			if got != retrievedAccount {
+				t.Errorf("accounts are the same and are not")
+			}
+		})
+	}
 }
