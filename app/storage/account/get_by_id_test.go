@@ -13,7 +13,7 @@ func TestRepository_GetByID(t *testing.T) {
 	type fields struct {
 		storage map[string]vos.Account
 	}
-	
+
 	type args struct {
 		ctx context.Context
 		id  string
@@ -31,7 +31,7 @@ func TestRepository_GetByID(t *testing.T) {
 			fields: fields{
 
 				storage: map[string]vos.Account{
-					"22233344433": {ID: "1", Name: "Joao", CPF: "22233344433", CreatedAt: time.Date(2022, 10, 16, 0, 0, 0, 0, time.Local)},
+					"1": {ID: "1", Name: "Joao", CPF: "22233344433", CreatedAt: time.Date(2022, 10, 16, 0, 0, 0, 0, time.Local)},
 				},
 			},
 			args: args{

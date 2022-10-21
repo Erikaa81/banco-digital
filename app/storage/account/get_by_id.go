@@ -9,7 +9,7 @@ import (
 func (r Repository) GetByID(ctx context.Context, id string) (vos.Account, error) {
 	account, ok := r.storage[id]
 	if !ok {
-		return vos.Account{}, vos.ErrCPFNotFound
+		return vos.Account{}, vos.ErrIDNotFound
 	}
 	return account, nil
 }
