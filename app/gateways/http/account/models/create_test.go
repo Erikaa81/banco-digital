@@ -36,7 +36,7 @@ func TestCreateRequest_Validate(t *testing.T) {
 		{
 			name:    "should return error because format birth invalid",
 			fields:  fields{Name: "Joao", CPF: "22244455566", Secret: "34n", BirthDate: "13-02-2000"},
-			wantErr: ErrFormat,
+			wantErr: ErrInvalidDateFormat,
 		},
 		{
 			name:    "should return error because secret is mandatory",

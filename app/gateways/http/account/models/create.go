@@ -3,15 +3,17 @@ package models
 import (
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 )
 
 var (
-	ErrMandatoryName   = errors.New("a name is required to create the account")
-	ErrMandatoryCPF    = errors.New("CPF is required to create the account")
-	ErrInvalidCPF      = errors.New("CPF is invalid")
-	ErrMandatorySecret = errors.New("secret is required to create the account")
-	ErrFormat          = errors.New("format is invalid")
+	ErrMandatoryName      = errors.New("a name is required to create the account")
+	ErrMandatoryCPF       = errors.New("CPF is required to create the account")
+	ErrInvalidCPF         = errors.New("CPF is invalid")
+	ErrMandatorySecret    = errors.New("secret is required to create the account")
+	ErrInvalidDateFormat  = errors.New("format date is invalid")
+	ErrMandatoryBirthDate = errors.New("birth date is required to create the account")
 )
 
 type CreateRequest struct {
@@ -30,7 +32,7 @@ func (a *CreateRequest) Validate() error {
 		return ErrMandatoryCPF
 	}
 
-	ValidateCPF := ValidateCPF(a.CPF)
+	ValidateCPF := validateCPF(a.CPF)
 	if !ValidateCPF {
 		return ErrInvalidCPF
 	}
@@ -39,11 +41,10 @@ func (a *CreateRequest) Validate() error {
 		return ErrMandatorySecret
 	}
 
-	ValidateFormat, ErrFormat := ValidateFormatBirth(a.BirthDate)
-	if ValidateFormat {
-		return ErrFormat
+	err := validateFormatBirth(a.BirthDate)
+	if err != nil {
+		return ErrInvalidDateFormat
 	}
-
 	return nil
 }
 
@@ -58,14 +59,18 @@ type ErrorResponse struct {
 	Error string `json:"error"`
 }
 
-func ValidateCPF(cpf string) bool {
+func validateCPF(cpf string) bool {
 	return len(cpf) == 11
 }
 
-func ValidateFormatBirth(birthDate string) (bool, error) {
+func validateFormatBirth(birthDate string) error {
+	if strings.TrimSpace(birthDate) == "" {
+		return ErrInvalidDateFormat
+	}
+
 	_, err := time.Parse("02/01/2006", birthDate)
 	if err != nil {
-		return true, fmt.Errorf("invalid date format %s", err)
+		return fmt.Errorf("invalid date format %s", err)
 	}
-	return false, nil
+	return nil
 }
