@@ -10,7 +10,7 @@ var (
 	ErrCPFAlreadyExists = errors.New("there is already an account for this cpf")
 	ErrIDNotFound       = errors.New("id not found")
 	ErrEmptyID          = errors.New("the id was not filled")
-	ErrEmptyCPF          = errors.New("the cpf was not filled")
+	ErrEmptyCPF         = errors.New("the cpf was not filled")
 )
 
 type Account struct {
