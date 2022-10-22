@@ -77,6 +77,26 @@ func TestUsecase_Create(t *testing.T) {
 			wantErr: true,
 		},
 		{
+			name: "should return error when creating account because already an account for this CPF",
+			fields: fields{
+				repository: account.RepositoryMock{
+					GetAccountErr: vos.ErrAccountNotFound,
+				},
+			},
+
+			args: args{
+				ctx: context.Background(),
+				input: vos.CreateInput{
+					Name:      "Joao",
+					CPF:       "33355566677",
+					Secret:    "y7d",
+					BirthDate: time.Date(2007, 10, 2, 0, 0, 0, 0, time.Local),
+				},
+			},
+			want:    vos.Account{},
+			wantErr: true,
+		},
+		{
 			name: "should return error when persiting account fails",
 			fields: fields{
 				repository: account.RepositoryMock{
@@ -97,7 +117,6 @@ func TestUsecase_Create(t *testing.T) {
 			want:    vos.Account{},
 			wantErr: true,
 		},
-		//teste cpf not found
 	}
 
 	for _, tt := range tests {
