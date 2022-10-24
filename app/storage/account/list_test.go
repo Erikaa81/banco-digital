@@ -1,45 +1,63 @@
 package account
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/erikaa81/banco-digital/app/domain/vos"
 )
 
-func TestList(t *testing.T) {
-	t.Run("should successfully return account list", func(t *testing.T) {
-		account1 := vos.Account{ID: "123", Name: "erika", CPF: "22233344455"}
-		account2 := vos.Account{ID: "45", Name: "Maria", CPF: "55533344455"}
-		account3 := vos.Account{ID: "678", Name: "Paula", CPF: "44455566647"}
+func TestRepository_List(t *testing.T) {
+	type fields struct {
+		storage map[string]vos.Account
+	}
 
-		r := Repository{
-			storage: map[string]vos.Account{},
-		}
+	tests := []struct {
+		name    string
+		fields  fields
+		want    []vos.Account
+		wantErr bool
+	}{
+		{
+			name: "should successfully return account list",
+			fields: fields{
+				storage: map[string]vos.Account{
+					"123": {ID: "123", Name: "erika", CPF: "22233344455"},
+					"45":  {ID: "45", Name: "Maria", CPF: "55533344455"},
+					"678": {ID: "678", Name: "Paula", CPF: "44455566647"},
+				},
+			},
+			want: []vos.Account{
+				{ID: "123", Name: "erika", CPF: "22233344455"},
+				{ID: "45", Name: "Maria", CPF: "55533344455"},
+				{ID: "678", Name: "Paula", CPF: "44455566647"},
+			},
+			wantErr: false,
+		},
+		{
+			name: "should return successfully an empty list",
+			fields: fields{
+				storage: map[string]vos.Account{},
+			},
+			want:  nil,
+			wantErr: false,
+		},
+	}
 
-		want := []vos.Account{account1, account2, account3}
-		got, err := r.List()
-		for i, v := range got {
-			if want[i] != v {
-				t.Errorf("want:%+v got%+v", want[i], got[i])
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			r := Repository{
+				storage: tt.fields.storage,
 			}
-		}
+			got, err := r.List()
+			if (err != nil) != tt.wantErr {
+				t.Errorf("Repository.List() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
 
-		if err != nil {
-			t.Errorf("wanted error to be nil and got: %v", err)
-		}
-	})
-
-	t.Run("should return error and an empty list when listing", func(t *testing.T) {
-		r := Repository{
-			storage: nil,
-		}
-		got, err := r.List()
-		if len(got) != 0 {
-			t.Errorf("wanted empty list but got: %+v", got)
-		}
-
-		if err != nil {
-			t.Errorf("wanted error to be nil and got: %v", err)
-		}
-	})
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("Repository.List() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }

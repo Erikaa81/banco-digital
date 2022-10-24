@@ -26,18 +26,18 @@ func TestUsecase_List(t *testing.T) {
 			fields: fields{
 				repository: account.RepositoryMock{
 					AccountList: []vos.Account{
-						{ID: "1", Name: "Joao", CPF: "22233344455", Secret: "Er5", CreatedAt: time.Date(2003, 10, 2, 0, 0, 0, 0, time.Local)},
-						{ID: "2", Name: "Maria", CPF: "55533344455", Secret: "F35", CreatedAt: time.Date(1994, 16, 7, 0, 0, 0, 0, time.Local)},
-						{ID: "3", Name: "Paula", CPF: "44455566647", Secret: "E43", CreatedAt: time.Date(1988, 1, 9, 0, 0, 0, 0, time.Local)},
+						{ID: "1", Name: "Joao", CPF: "22233344455", Secret: "Er5", BirthDate: time.Date(2003, 10, 2, 0, 0, 0, 0, time.Local)},
+						{ID: "2", Name: "Maria", CPF: "55533344455", Secret: "F35", BirthDate: time.Date(1994, 16, 7, 0, 0, 0, 0, time.Local)},
+						{ID: "3", Name: "Paula", CPF: "44455566647", Secret: "E43", BirthDate: time.Date(1988, 1, 9, 0, 0, 0, 0, time.Local)},
 					},
 					GetAccountErr: nil,
 					Account:       vos.Account{},
 				},
 			},
 			want: []vos.Account{
-				{ID: "1", Name: "Joao", CPF: "22233344455", Secret: "Er5", CreatedAt: time.Date(2003, 10, 2, 0, 0, 0, 0, time.Local)},
-				{ID: "2", Name: "Maria", CPF: "55533344455", Secret: "F35", CreatedAt: time.Date(1994, 16, 7, 0, 0, 0, 0, time.Local)},
-				{ID: "3", Name: "Paula", CPF: "44455566647", Secret: "E43", CreatedAt: time.Date(1988, 1, 9, 0, 0, 0, 0, time.Local)},
+				{ID: "1", Name: "Joao", CPF: "22233344455", Secret: "Er5", BirthDate: time.Date(2003, 10, 2, 0, 0, 0, 0, time.Local)},
+				{ID: "2", Name: "Maria", CPF: "55533344455", Secret: "F35", BirthDate: time.Date(1994, 16, 7, 0, 0, 0, 0, time.Local)},
+				{ID: "3", Name: "Paula", CPF: "44455566647", Secret: "E43", BirthDate: time.Date(1988, 1, 9, 0, 0, 0, 0, time.Local)},
 			},
 
 			wantErr: false,
