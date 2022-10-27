@@ -9,7 +9,7 @@ import (
 )
 
 func (h Handler) List(w http.ResponseWriter, r *http.Request) {
-	accountsList, err := h.UseCase.List()
+	accountsList, err := h.UseCase.List(r.Context())
 
 	var responseError models.ErrorResponse
 	if err != nil {

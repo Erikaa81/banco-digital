@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"context"
 	"errors"
 	"reflect"
 	"testing"
@@ -15,9 +16,14 @@ func TestUsecase_List(t *testing.T) {
 		repository account.Repository
 	}
 
+	type args struct {
+		ctx context.Context
+	}
+
 	tests := []struct {
 		name    string
 		fields  fields
+		args    args
 		want    []vos.Account
 		wantErr bool
 	}{
@@ -69,7 +75,7 @@ func TestUsecase_List(t *testing.T) {
 			u := Usecase{
 				repository: tt.fields.repository,
 			}
-			got, err := u.List()
+			got, err := u.List(tt.args.ctx)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("Usecase.List() error = %v, wantErr %v", err, tt.wantErr)
 				return

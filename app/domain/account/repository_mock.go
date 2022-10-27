@@ -27,6 +27,6 @@ func (r RepositoryMock) GetByID(context.Context, string) (vos.Account, error) {
 	return r.Account, r.GetAccountErr
 }
 
-func (r RepositoryMock) List() ([]vos.Account, error) {
+func (r RepositoryMock) List(context.Context) ([]vos.Account, error) {
 	return r.AccountList, r.ListErr
 }

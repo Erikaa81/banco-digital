@@ -26,6 +26,6 @@ func (u UsecaseMock) GetByID(ctx context.Context, id string) (vos.Account, error
 	return u.Account,nil
 }
 
-func (u UsecaseMock) List() ([]vos.Account, error) {
+func (u UsecaseMock) List(ctx context.Context) ([]vos.Account, error) {
 	return u.AccountsList, u.ListErr
 }

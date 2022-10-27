@@ -1,9 +1,13 @@
 package usecase
 
-import "github.com/erikaa81/banco-digital/app/domain/vos"
+import (
+	"context"
 
-func (u Usecase) List() ([]vos.Account, error) {
-	accounts, err := u.repository.List()
+	"github.com/erikaa81/banco-digital/app/domain/vos"
+)
+
+func (u Usecase) List(ctx context.Context) ([]vos.Account, error) {
+	accounts, err := u.repository.List(ctx)
 	if err != nil {
 		return nil, err
 	}
