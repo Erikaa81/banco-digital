@@ -1,7 +1,6 @@
 package account
 
 import (
-	"errors"
 	"log"
 	"net/http"
 
@@ -13,13 +12,6 @@ func (h Handler) List(w http.ResponseWriter, r *http.Request) {
 
 	var responseError models.ErrorResponse
 	if err != nil {
-		switch {
-		case errors.Is(err, errors.New("error when listing accounts")):
-			responseError = models.ErrorResponse{Error: err.Error()}
-		default:
-			responseError = models.ErrorResponse{Error: err.Error()}
-		}
-
 		Respond(w, responseError, http.StatusInternalServerError)
 		log.Printf("error when listing accounts")
 		return
@@ -38,5 +30,5 @@ func (h Handler) List(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Respond(w, models.ListResponse{List: accounts}, http.StatusOK)
-	log.Printf("list accounts request failed %v", err)
+	log.Printf("list accounts request successfully %v", err)
 }
