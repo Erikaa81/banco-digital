@@ -20,6 +20,7 @@ func TestRepository_Store(t *testing.T) {
 		name    string
 		fields  fields
 		args    args
+		want    vos.Account
 		wantErr bool
 	}{
 		{
@@ -35,6 +36,11 @@ func TestRepository_Store(t *testing.T) {
 					CPF:       "2221133322",
 					CreatedAt: time.Date(2022, 10, 16, 0, 0, 0, 0, time.Local)},
 			},
+			want: vos.Account{
+				ID:   "123",
+				Name: "Maria",
+				CPF:  "2221133322",
+			},
 
 			wantErr: false,
 		},
@@ -48,6 +54,15 @@ func TestRepository_Store(t *testing.T) {
 			got, err := r.Store(tt.args.ctx, tt.args.account)
 			if err != nil {
 				t.Errorf("wanted error to be nil got: %v", err)
+			}
+
+			if got.ID == "" {
+				t.Errorf("wanted different than empty but got: %v", err)
+			}
+			tt.want.ID = got.ID
+
+			if got.CreatedAt.IsZero() {
+				t.Errorf("wanted different than empty but got: %v", err)
 			}
 
 			retrievedAccount, ok := r.storage[got.ID]
