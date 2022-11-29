@@ -15,7 +15,7 @@ type RepositoryMock struct {
 	ListErr   error
 }
 
-func (r RepositoryMock) Store(context.Context, vos.Transfer) (vos.Transfer, error) {
+func (r RepositoryMock) Create(context.Context, vos.Transfer) (vos.Transfer, error) {
 	return r.TransferOutput, r.CreateTransferErr
 }
 

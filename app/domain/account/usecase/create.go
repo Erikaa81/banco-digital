@@ -11,16 +11,16 @@ import (
 
 func (u Usecase) Create(ctx context.Context, input vos.CreateInput) (vos.Account, error) {
 	persistedAccount, err := u.repository.GetByCPF(ctx, input.CPF)
-	if err != nil && !errors.Is(err, vos.ErrCPFNotFound){
+	if err != nil && !errors.Is(err, vos.ErrAccountNotFound) {
 		return vos.Account{}, err
 	}
 
-	if !reflect.DeepEqual(persistedAccount, vos.Account{}){
+	if !reflect.DeepEqual(persistedAccount, vos.Account{}) {
 		return vos.Account{}, vos.ErrCPFAlreadyExists
 	}
 
-	if err = validateAge(input.BirthDate); err != nil{
-			return vos.Account{}, err
+	if err = validateAge(input.BirthDate); err != nil {
+		return vos.Account{}, err
 	}
 
 	account := vos.Account{
@@ -30,7 +30,7 @@ func (u Usecase) Create(ctx context.Context, input vos.CreateInput) (vos.Account
 		BirthDate: input.BirthDate,
 	}
 
-	output, err := u.repository.Store(ctx, account)
+	output, err := u.repository.Create(ctx, account)
 	if err != nil {
 		return vos.Account{}, err
 	}

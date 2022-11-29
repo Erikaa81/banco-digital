@@ -7,8 +7,8 @@ import (
 )
 
 type Repository interface {
-	GetByCPF(context.Context, string) (vos.Account, error)
-	Store(context.Context, vos.Account) (vos.Account, error)
-	GetByID(context.Context, string) (vos.Account, error)
-	List(context.Context) ([]vos.Account, error)
+	GetByCPF(ctx context.Context, cpf string) (vos.Account, error)
+	Create(ctx context.Context, account vos.Account) (vos.Account, error)
+	GetByID(ctx context.Context, id string) (vos.Account, error)
+	List(ctx context.Context) ([]vos.Account, error)
 }

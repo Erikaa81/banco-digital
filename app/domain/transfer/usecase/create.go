@@ -23,7 +23,7 @@ func (u Usecase) Create(ctx context.Context, input vos.CreateTransferInput) (vos
 		Amount:               input.Amount,
 	}
 
-	output, err := u.repository.Store(ctx, transfer)
+	output, err := u.repository.Create(ctx, transfer)
 	if err != nil {
 		return vos.Transfer{}, err
 	}

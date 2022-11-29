@@ -7,7 +7,7 @@ import (
 )
 
 type Repository interface {
-	Store(context.Context, vos.Transfer) (vos.Transfer, error)
-	List(context.Context, string) ([]vos.Transfer, error)
-	GetByID(context.Context, string) (vos.Transfer, error)
+	Create(ctx context.Context, transfer vos.Transfer) (vos.Transfer, error)
+	List(ctx context.Context, accountID string) ([]vos.Transfer, error)
+	GetByID(ctx context.Context, id string) (vos.Transfer, error)
 }

@@ -19,7 +19,7 @@ func (r RepositoryMock) GetByCPF(context.Context, string) (vos.Account, error) {
 	return r.Account, r.GetAccountErr
 }
 
-func (r RepositoryMock) Store(context.Context, vos.Account) (vos.Account, error) {
+func (r RepositoryMock) Create(context.Context, vos.Account) (vos.Account, error) {
 	return r.CreateAccountOutput, r.CreateAccountErr
 }
 
