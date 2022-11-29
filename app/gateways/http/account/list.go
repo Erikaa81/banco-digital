@@ -30,5 +30,5 @@ func (h Handler) List(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Respond(w, models.ListResponse{List: accounts}, http.StatusOK)
-	log.Printf("list accounts request successfully %v", err)
+	log.Printf("list accounts request successfully")
 }

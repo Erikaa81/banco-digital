@@ -33,5 +33,5 @@ func (h Handler) List(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Respond(w, models.GetIDResponse{List: transfers}, http.StatusOK)
-	log.Printf("list transfers request successfully %v", err)
+	log.Printf("list transfers request successfully")
 }

@@ -56,7 +56,7 @@ func (h Handler) Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Respond(w, responseBody, http.StatusCreated)
-	log.Printf("create transfer request successfully %v", err)
+	log.Printf("create transfer request successfully")
 }
 
 func Respond(w http.ResponseWriter, responseBody interface{}, statusCode int) {

@@ -42,5 +42,5 @@ func (h Handler) GetByID(w http.ResponseWriter, r *http.Request) {
 	}
 
 	Respond(w, responseBody, http.StatusOK)
-	log.Printf("get by id request successfully %v", err)
+	log.Printf("get by id request successfully")
 }
