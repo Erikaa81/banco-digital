@@ -12,7 +12,7 @@ func (r *Repository) List(ctx context.Context, accountID string) ([]vos.Transfer
 	var transfer vos.Transfer
 
 	rows, err := r.Query(ctx, `SELECT id, account_origin_id, account_destination_id, amount, created_at
-	FROM transfers WHERE account_origin_id = $1 OR account_destination_id = $1`, accountID)
+	FROM transactions WHERE account_origin_id = $1 OR account_destination_id = $1`, accountID)
 	if err != nil {
 		return []vos.Transfer{}, err
 	}

@@ -11,4 +11,5 @@ type Repository interface {
 	Create(ctx context.Context, account vos.Account) (vos.Account, error)
 	GetByID(ctx context.Context, id string) (vos.Account, error)
 	List(ctx context.Context) ([]vos.Account, error)
+	GetBalance(ctx context.Context, id string) (int, error)
 }

@@ -18,6 +18,7 @@ type Account struct {
 	Name      string
 	CPF       string
 	Secret    string
+	Balance   int
 	BirthDate time.Time
 	CreatedAt time.Time
 }

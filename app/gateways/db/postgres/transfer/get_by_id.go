@@ -12,7 +12,7 @@ func (r *Repository) GetByID(ctx context.Context, id string) (vos.Transfer, erro
 	var transfer vos.Transfer
 
 	query := `SELECT id, account_origin_id, account_destination_id, amount, created_at 
-	FROM transfers WHERE id = $1`
+	FROM transactions WHERE id = $1`
 
 	err := r.Pool.QueryRow(ctx, query, id).Scan(
 		&transfer.ID,

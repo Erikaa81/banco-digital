@@ -13,6 +13,8 @@ type RepositoryMock struct {
 	AccountList         []vos.Account
 	GetAccountErr       error
 	Account             vos.Account
+	Balance             int
+	GetBalanceErr       error
 }
 
 func (r RepositoryMock) GetByCPF(context.Context, string) (vos.Account, error) {
@@ -29,4 +31,8 @@ func (r RepositoryMock) GetByID(context.Context, string) (vos.Account, error) {
 
 func (r RepositoryMock) List(context.Context) ([]vos.Account, error) {
 	return r.AccountList, r.ListErr
+}
+
+func (r RepositoryMock) GetBalance(context.Context, string) (int, error) {
+	return r.Account.Balance, r.GetBalanceErr
 }

@@ -10,6 +10,7 @@ var (
 	ErrAccountOriginNotFound      = errors.New("account origin not found")
 	ErrAccountDestinationNotFound = errors.New("account destination not found")
 	ErrSameAccounts               = errors.New("the target account must be different from the source account")
+	ErrInsufficientBalance        = errors.New("insufficient balance")
 )
 
 type Transfer struct {

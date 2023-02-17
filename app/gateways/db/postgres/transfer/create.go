@@ -7,7 +7,7 @@ import (
 )
 
 func (r *Repository) Create(ctx context.Context, transfer vos.Transfer) (vos.Transfer, error) {
-	query := `INSERT INTO transfers(
+	query := `INSERT INTO transactions(
 	account_origin_id,
 	account_destination_id,
 	amount
