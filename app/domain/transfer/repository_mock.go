@@ -12,7 +12,7 @@ type RepositoryMock struct {
 	Transfer          vos.Transfer
 	GetTransferErr    error
 	TransferList      []vos.Transfer
-	ListErr   error
+	ListErr           error
 }
 
 func (r RepositoryMock) Create(context.Context, vos.Transfer) (vos.Transfer, error) {

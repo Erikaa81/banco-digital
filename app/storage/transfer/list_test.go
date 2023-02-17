@@ -14,8 +14,8 @@ func TestRepository_List(t *testing.T) {
 	}
 
 	type args struct {
-		ctx context.Context
-		accountID  string
+		ctx       context.Context
+		accountID string
 	}
 
 	tests := []struct {
@@ -35,8 +35,8 @@ func TestRepository_List(t *testing.T) {
 				},
 			},
 			args: args{
-				ctx: context.Background(),
-				accountID:  "1",
+				ctx:       context.Background(),
+				accountID: "1",
 			},
 
 			want: []vos.Transfer{
