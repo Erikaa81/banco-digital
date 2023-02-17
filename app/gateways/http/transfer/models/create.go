@@ -23,6 +23,7 @@ func (t *CreateRequest) Validate() error {
 	if t.Amount <= 0 {
 		return ErrAmountInvalid
 	}
+
 	return nil
 }
 

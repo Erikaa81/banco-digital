@@ -12,7 +12,7 @@ import (
 
 var (
 	ErrIDNotFound = errors.New("id not found")
-	ErrSearchID = errors.New("search by id failed")
+	ErrSearchID   = errors.New("search by id failed")
 )
 
 func (h Handler) GetByID(w http.ResponseWriter, r *http.Request) {
