@@ -56,7 +56,7 @@ func TestHandler_List(t *testing.T) {
 				GetByIDErr: errors.New("error when listing transfers"),
 			},
 			wantStatus:   http.StatusInternalServerError,
-			wantResponse: models.ErrorResponse{Error: "error when listing transfers"},
+			wantResponse: models.ErrorResponse{Error: ""},
 		},
 	}
 

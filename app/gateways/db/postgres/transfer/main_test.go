@@ -71,7 +71,7 @@ func TestCreate(t *testing.T) {
 			Amount:               100,
 		}
 
-		_, err = conn.Exec(ctx, "DELETE FROM transactions")
+		_, err = conn.Exec(ctx, "DELETE FROM transfers")
 		if err != nil {
 			fmt.Println(err.Error())
 		}

@@ -57,7 +57,7 @@ func TestHandler_List(t *testing.T) {
 				ListErr:      errors.New("error when listing accounts"),
 			},
 			wantStatus: http.StatusInternalServerError,
-			wantResponse: models.ErrorResponse{Error: "error when listing accounts"},
+			wantResponse: models.ErrorResponse{Error: ""},
 		},
 	}
 

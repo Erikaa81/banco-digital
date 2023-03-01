@@ -38,7 +38,7 @@ func TestUsecase_Create(t *testing.T) {
 				},
 				accountRepository: account.RepositoryMock{
 					Account: vos.Account{
-						ID: "1", Name: "Paula", CPF: "88877766655",
+						ID: "2", Name: "Paula", CPF: "88877766655", Balance: 200,
 					},
 				},
 			},
