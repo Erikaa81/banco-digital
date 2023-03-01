@@ -19,6 +19,10 @@ func (u Usecase) Create(ctx context.Context, input vos.CreateTransferInput) (vos
 
 	accountOrigin.Balance, err = u.accountRepository.GetBalance(ctx, input.AccountOriginID)
 	if err != nil {
+		return vos.Transfer{}, err
+	}
+
+	if accountOrigin.Balance < input.Amount {
 		return vos.Transfer{}, vos.ErrInsufficientBalance
 	}
 
@@ -26,10 +30,6 @@ func (u Usecase) Create(ctx context.Context, input vos.CreateTransferInput) (vos
 		AccountOriginID:      accountOrigin.ID,
 		AccountDestinationID: accountDestination.ID,
 		Amount:               input.Amount,
-	}
-
-	if &accountOrigin.Balance == nil || accountOrigin.Balance < transfer.Amount {
-		return vos.Transfer{}, vos.ErrInsufficientBalance
 	}
 
 	output, err := u.repository.Create(ctx, transfer)
